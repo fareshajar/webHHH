@@ -98,8 +98,6 @@ public class UserController {
             System.out.println(user.getUserId());
             System.out.println(user.getUserName());
             System.out.println(user.getVille());
-            System.out.println(user.getDemandenattente());
-            System.out.println(user.getDemandenattente());
         }
         return users;
     }
@@ -117,8 +115,40 @@ public class UserController {
         }
         return users;
     }
+    @GetMapping("/GetClientGestion")
+    public List<User> getclientGestion() {
+        System.out.println("je suis appele 7");
+        List<User> users = userService.GetClient();
+        for(User user:users){
+            System.out.println(user.getUserId());
+            System.out.println(user.getUserName());
+            System.out.println(user.getVille());
+        }
+        return users;
+    }
+    @DeleteMapping("/SupprimerClient/{userId}")
+    public ResponseEntity<String> supprimerClient(@PathVariable int userId) {
+        boolean isDeleted = userService.deleteprofile(userId);
+        if (isDeleted) {
+            return ResponseEntity.ok("{\"message\": \"Client supprimé avec succès\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Erreur lors de la suppression du fournisseur\"}");
+        }
+    }
 
-
-
-
+    @PutMapping("/ModifierClient/{userId}")
+    public ResponseEntity<String> modifierClient(@PathVariable int userId, @RequestBody Map<String, String> fournisseurData) {
+        System.out.println("je suis appele 3");
+        String userName = fournisseurData.get("userName");
+        String ville = fournisseurData.get("ville");
+        String mobile = fournisseurData.get("mobile");
+        String adress = fournisseurData.get("adress");
+        String email = fournisseurData.get("email");
+        boolean isUpdated = userService.updateClient(userId, userName, ville, mobile, email,adress);
+        if (isUpdated) {
+            return ResponseEntity.ok("{\"message\": \"Fournisseur mis à jour avec succès\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Erreur lors de la mise à jour du fournisseur\"}");
+        }
+    }
 }

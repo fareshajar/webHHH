@@ -194,9 +194,9 @@ public class UserService {
     public List<User> findAvisClient() {
         List<User> users = new ArrayList<>();
         Connection conn = connexion();
-        String select = "SELECT U.UserId, U.UserName,U.mobile,U.ville, A.commentaire" +
-                "FROM usertable U "+
-                "INNER JOIN avis A ON U.UserId = A.UserId " ;
+        String select = "SELECT U.UserId, U.UserName, U.mobile, U.ville, A.commentaire " +
+                "FROM usertable U " +
+                "INNER JOIN avis A ON U.UserId = A.UserId";
         try (PreparedStatement statement = conn.prepareStatement(select)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -210,11 +210,59 @@ public class UserService {
                 users.add(user);
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
             System.out.println("probleme ici user6");
         }
         return users;
     }
 
+    public List<User> GetClient() {
+        List<User> users = new ArrayList<>();
+        Connection conn = connexion();
+        String select = "SELECT U.UserId, U.UserName, U.mobile, U.ville, U.email, U.adress " +
+                "FROM usertable U " +
+                "WHERE U.UserType=1";  // Correction de la faute de frappe
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(select);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                // Créer un nouvel utilisateur
+                User user = new User();
+                user.setUserId(resultSet.getInt("UserId"));
+                user.setUserName(resultSet.getString("UserName"));
+                user.setMobile(resultSet.getString("mobile"));
+                user.setVille(resultSet.getString("ville"));
+                user.setAdress(resultSet.getString("adress"));
+                user.setEmail(resultSet.getString("email"));
+
+                users.add(user);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println("Problème lors de la récupération des clients");
+        }
+        return users;
+    }
+    public boolean updateClient(int userId, String userName, String ville, String mobile, String email,String adress) {
+        try {
+            Connection conn = connexion();
+            PreparedStatement update = conn.prepareStatement("UPDATE usertable SET UserName=?, ville=?, mobile=?, email=?, adress=? WHERE UserId=?");
+            update.setString(1, userName);
+            update.setString(2, ville);
+            update.setString(3, mobile);
+            update.setString(4,email);
+            update.setString(5,adress);
+            update.setInt(6, userId);
+            int result = update.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println("probleme 3 users");
+            return false;
+        }
+    }
 
 
 

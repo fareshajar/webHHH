@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { FaSignOutAlt, FaUserPlus, FaUserCog, FaRegComment} from 'react-icons/fa';
+import { FaSignOutAlt, FaUserPlus, FaUserCog, FaRegComment, FaChartBar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import AjoutFormulaire from './AjoutFormulaire';
 import GestionFournisseurs from './GestionFournisseurs';
-import AvisClient from'./AvisClient'
+import GestionClient from './GestionClient';
+import AvisClient from './AvisClient';
+
 const Dashboard = () => {
     const [fournisseurs, setFournisseurs] = useState([]);
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeComponent, setActiveComponent] = useState('overview');
 
-    const toggleAjoutFormulaire = () => {
-        setActiveComponent(activeComponent === 'ajout' ? 'overview' : 'ajout');
-    };
-    const toggleAvisClient = () => {
-        setActiveComponent(activeComponent === 'avis' ? 'overview' : 'avis');
-    };
-    const toggleGestionFournisseur = () => {
-        setActiveComponent(activeComponent === 'gestion' ? 'overview' : 'gestion');
-    };
+    const showAjoutFormulaire = () => setActiveComponent('ajout');
+    const showAvisClient = () => setActiveComponent('avis');
+    const showGestionFournisseurs = () => setActiveComponent('gestionFournisseur');
+    const showGestionClients = () => setActiveComponent('gestionClient');
+    const showOverview = () => setActiveComponent('overview');
 
     useEffect(() => {
         const fetchFournisseurs = async () => {
@@ -53,15 +51,17 @@ const Dashboard = () => {
         switch (activeComponent) {
             case 'ajout':
                 return <AjoutFormulaire />;
-            case 'gestion':
+            case 'gestionFournisseur':
                 return <GestionFournisseurs />;
-            case'avis':
-                return <AvisClient /> ;
+            case 'gestionClient':
+                return <GestionClient />;
+            case 'avis':
+                return <AvisClient />;
             default:
                 return (
                     <>
                         <div style={styles.tableContainer}>
-                            <h2 style={styles.tableTitle}>Vue d'ensemble des Fournisseurs</h2>
+                            <h2 style={styles.tableTitle}>Statistique Fournisseur</h2>
                             <table style={styles.table}>
                                 <thead style={styles.tableHead}>
                                 <tr>
@@ -70,7 +70,7 @@ const Dashboard = () => {
                                     <th style={styles.tableCell}>Mobile</th>
                                     <th style={styles.tableCell}>Nombre service</th>
                                     <th style={styles.tableCell}>Commandes en attente</th>
-                                    <th style={styles.tableCell}>Commandes Realisées</th>
+                                    <th style={styles.tableCell}>Commandes Réalisées</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -95,7 +95,7 @@ const Dashboard = () => {
                         </div>
 
                         <div style={styles.tableContainer}>
-                            <h2 style={styles.tableTitle}>Vue d'ensemble des Clients</h2>
+                            <h2 style={styles.tableTitle}>Statistique Client</h2>
                             <table style={styles.table}>
                                 <thead style={styles.tableHead}>
                                 <tr>
@@ -139,20 +139,29 @@ const Dashboard = () => {
                     <div style={styles.logo}>Dashboard</div>
                     <nav style={styles.nav}>
                         <ul style={styles.navList}>
-
                             <li style={styles.navItem}>
-                                <a href="#avis" style={styles.navLink} onClick={toggleAvisClient}>
+                                <a href="#overview" style={styles.navLink} onClick={showOverview}>
+                                    <FaChartBar/> Statistiques
+                                </a>
+                            </li>
+                            <li style={styles.navItem}>
+                                <a href="#avis" style={styles.navLink} onClick={showAvisClient}>
                                     <FaRegComment/> Avis Client
                                 </a>
                             </li>
                             <li style={styles.navItem}>
-                                <a href="#ajouter" style={styles.navLink} onClick={toggleAjoutFormulaire}>
+                                <a href="#ajouter" style={styles.navLink} onClick={showAjoutFormulaire}>
                                     <FaUserPlus/> Ajouter Fournisseur
                                 </a>
                             </li>
                             <li style={styles.navItem}>
-                                <a href="#gerer" style={styles.navLink} onClick={toggleGestionFournisseur}>
+                                <a href="#gerer" style={styles.navLink} onClick={showGestionFournisseurs}>
                                     <FaUserCog/> Gérer Fournisseur
+                                </a>
+                            </li>
+                            <li style={styles.navItem}>
+                                <a href="#gerer" style={styles.navLink} onClick={showGestionClients}>
+                                    <FaUserCog/> Gérer Client
                                 </a>
                             </li>
                             <li style={styles.navItem}>
