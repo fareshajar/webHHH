@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 const GestionFournisseurs = () => {
     const [fournisseurs, setFournisseurs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedFournisseur, setSelectedFournisseur] = useState(null);
-
     useEffect(() => {
         const fetchFournisseurs = async () => {
             try {
@@ -21,15 +19,6 @@ const GestionFournisseurs = () => {
 
         fetchFournisseurs();
     }, []);
-
-
-    const fonctionInputChange = (e) => {
-        const { name, value } = e.target;
-        setSelectedFournisseur(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
 
     if (isLoading) {
         return <div>Chargement des fournisseurs...</div>;
