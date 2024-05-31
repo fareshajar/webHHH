@@ -10,7 +10,7 @@ const AjoutFormulaire = () => {
     const [message, setMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChange = (e) => {
+    const Change = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -18,7 +18,7 @@ const AjoutFormulaire = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const Submit = async (e) => {
         e.preventDefault();
         if (isSubmitting) {
             return;
@@ -57,7 +57,7 @@ const AjoutFormulaire = () => {
         <div style={styles.formContainer}>
             <h2 style={styles.formTitle}>Ajouter Mon Fournisseur</h2>
             <p style={{ color: message.includes('succès') ? 'green' : 'red' }}>{message}</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={Submit}>
                 <div style={styles.formGroup}>
                     <label htmlFor="UserName" style={styles.label}>Nom d'utilisateur:</label>
                     <input
@@ -65,7 +65,7 @@ const AjoutFormulaire = () => {
                         id="UserName"
                         name="UserName"
                         value={formData.UserName}
-                        onChange={handleChange}
+                        onChange={Change}
                         style={styles.input}
                     />
                 </div>
@@ -76,7 +76,7 @@ const AjoutFormulaire = () => {
                         id="PassWord"
                         name="PassWord"
                         value={formData.PassWord}
-                        onChange={handleChange}
+                        onChange={Change}
                         style={styles.input}
                     />
                 </div>
@@ -87,7 +87,7 @@ const AjoutFormulaire = () => {
                         id="mobile"
                         name="mobile"
                         value={formData.mobile}
-                        onChange={handleChange}
+                        onChange={Change}
                         style={styles.input}
                     />
                 </div>
@@ -98,7 +98,7 @@ const AjoutFormulaire = () => {
                         id="ville"
                         name="ville"
                         value={formData.ville}
-                        onChange={handleChange}
+                        onChange={Change}
                         style={styles.input}
                     />
                 </div>
