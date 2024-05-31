@@ -23,7 +23,7 @@ const GestionClients = () => {
         fetchClients();
     }, []);
 
-    const handleDelete = async (id) => {
+    const Delete = async (id) => {
         try {
             await fetch(`http://localhost:8096/User/SupprimerClient/${id}`, {
                 method: 'DELETE',
@@ -44,7 +44,7 @@ const GestionClients = () => {
         setSelectedClient(null);
     };
 
-    const handleEdit = async () => {
+    const Edit = async () => {
         try {
             const response = await fetch(`http://localhost:8096/User/ModifierClient/${selectedClient.userId}`, {
                 method: 'PUT',
@@ -70,7 +70,7 @@ const GestionClients = () => {
         }
     };
 
-    const handleInputChange = (e) => {
+    const InputChange = (e) => {
         const { name, value } = e.target;
         setSelectedClient(prevState => ({
             ...prevState,
@@ -107,7 +107,7 @@ const GestionClients = () => {
                             <td style={styles.td}>{client.adress}</td>
                             <td>
                                 <button onClick={() => openEditModal(client)} style={styles.actionBtn}><FaEdit/></button>
-                                <button onClick={() => handleDelete(client.userId)} style={styles.actionBtn}><FaTrash/></button>
+                                <button onClick={() => Delete(client.userId)} style={styles.actionBtn}><FaTrash/></button>
                             </td>
                         </tr>
                     ))}
@@ -119,16 +119,16 @@ const GestionClients = () => {
                     <div style={styles.modalContainer}>
                         <h2>Modifier Client</h2>
                         <label>Nom d'utilisateur</label>
-                        <input type="text" name="userName" value={selectedClient.userName} onChange={handleInputChange}/>
+                        <input type="text" name="userName" value={selectedClient.userName} onChange={InputChange}/>
                         <label>Mobile</label>
-                        <input type="text" name="mobile" value={selectedClient.mobile} onChange={handleInputChange}/>
+                        <input type="text" name="mobile" value={selectedClient.mobile} onChange={InputChange}/>
                         <label>Ville</label>
-                        <input type="text" name="ville" value={selectedClient.ville} onChange={handleInputChange}/>
+                        <input type="text" name="ville" value={selectedClient.ville} onChange={InputChange}/>
                         <label>Email</label>
-                        <input type="text" name="email" value={selectedClient.email} onChange={handleInputChange}/>
+                        <input type="text" name="email" value={selectedClient.email} onChange={InputChange}/>
                         <label>Adresse</label>
-                        <input type="text" name="adress" value={selectedClient.adress} onChange={handleInputChange}/>
-                        <button onClick={handleEdit}>Enregistrer</button>
+                        <input type="text" name="adress" value={selectedClient.adress} onChange={InputChange}/>
+                        <button onClick={Edit}>Enregistrer</button>
                         <button onClick={closeEditModal}>Annuler</button>
                     </div>
                 </div>
