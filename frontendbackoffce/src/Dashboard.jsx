@@ -9,6 +9,7 @@ import AvisClient from './AvisClient';
 const Dashboard = () => {
     const [fournisseurs, setFournisseurs] = useState([]);
     const [clients, setClients] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [activeComponent, setActiveComponent] = useState('overview');
 
     const showAjoutFormulaire = () => setActiveComponent('ajout');
